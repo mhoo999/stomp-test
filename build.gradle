@@ -1,16 +1,16 @@
 plugins {
+    id 'org.springframework.boot' version '2.7.12'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id 'java'
-    id 'org.springframework.boot' version '3.5.6'
-    id 'io.spring.dependency-management' version '1.1.7'
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-description = 'stomp-test'
+sourceCompatibility = '11'
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
     }
 }
 
@@ -19,11 +19,39 @@ repositories {
 }
 
 dependencies {
+    // Spring Boot 핵심 의존성
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+    // JSON 처리
+    implementation 'org.springframework.boot:spring-boot-starter-json'
+
+    // 개발 도구 (선택적)
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // 테스트
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'org.springframework:spring-websocket'
+    testImplementation 'org.springframework:spring-messaging'
+
+    // 어노테이션 프로세서
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+}
+
+// 확장 기능용 의존성 (필요시 주석 해제)
+dependencies {
+    // Redis 사용시
+    // implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    // Spring Security 사용시
+    // implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // Validation 사용시
+    // implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // Lombok 사용시
+    // compileOnly 'org.projectlombok:lombok'
+    // annotationProcessor 'org.projectlombok:lombok'
 }
 
 tasks.named('test') {
